@@ -186,7 +186,57 @@
     </x-modal>
 
     <x-modal name="update-password" focusable>
-        </x-modal>
+    <form method="POST" action="{{ route('password.update') }}" class="p-8 bg-[#111827]">
+        @csrf
+        @method('put')
+
+        <h2 class="text-xl font-black text-white tracking-tight mb-1">Ganti Password</h2>
+        <p class="text-xs text-slate-500 mb-6 uppercase tracking-widest font-bold">
+            Pastikan password baru aman dan mudah diingat
+        </p>
+
+        <div class="space-y-4">
+            <!-- Password Lama -->
+            <div>
+                <label class="block text-[10px] font-black text-amber-400 uppercase mb-1">
+                    Password Saat Ini
+                </label>
+                <input type="password" name="current_password"
+                    class="w-full bg-slate-900 border-slate-800 rounded-xl text-white text-sm focus:ring-amber-500 focus:border-amber-500">
+            </div>
+
+            <!-- Password Baru -->
+            <div>
+                <label class="block text-[10px] font-black text-indigo-400 uppercase mb-1">
+                    Password Baru
+                </label>
+                <input type="password" name="password"
+                    class="w-full bg-slate-900 border-slate-800 rounded-xl text-white text-sm focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+
+            <!-- Konfirmasi -->
+            <div>
+                <label class="block text-[10px] font-black text-indigo-400 uppercase mb-1">
+                    Konfirmasi Password
+                </label>
+                <input type="password" name="password_confirmation"
+                    class="w-full bg-slate-900 border-slate-800 rounded-xl text-white text-sm focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+        </div>
+
+        <div class="mt-8 flex justify-end gap-3">
+            <button type="button" x-on:click="$dispatch('close')"
+                class="px-6 py-2 bg-slate-800 text-white text-xs font-bold rounded-xl hover:bg-slate-700 transition">
+                Batal
+            </button>
+
+            <button type="submit"
+                class="px-6 py-2 bg-amber-600 text-white text-xs font-bold rounded-xl hover:bg-amber-500 transition shadow-lg shadow-amber-600/20">
+                Update Password
+            </button>
+        </div>
+    </form>
+</x-modal>
 
     <script>
            function loadProfileActivity() {

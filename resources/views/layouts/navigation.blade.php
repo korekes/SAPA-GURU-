@@ -96,7 +96,7 @@
 
                     <div class="pt-4 pb-2 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Tentang</div>
 
-                    <a href="/about" 
+                    <a href="/about/developer" 
                        class="flex items-center w-full px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 
                        {{ request()->routeIs('about') ? 'bg-gradient-to-r from-indigo-600/20 to-indigo-600/5 text-indigo-400 border border-indigo-500/30' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200 border border-transparent' }}">
                         <i class="fa-solid fa-people-group mr-3 text-base {{ request()->routeIs('about') ? 'text-indigo-400' : 'text-slate-500' }}"></i>

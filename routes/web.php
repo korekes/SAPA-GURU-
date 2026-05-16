@@ -192,8 +192,10 @@ Route::middleware(['auth', 'role:guru'])->group(function () {
 | ABOUT ROUTES
 |--------------------------------------------------------------------------
 */
-Route::get('/about', [DashboardController::class, 'developer'])
+Route::get('/about/developer', [DashboardController::class, 'developer'])
     ->name('about.developer');
+
+Route::get('/about', [DashboardController::class, 'about'])->name('about');
 
 /*
 |--------------------------------------------------------------------------

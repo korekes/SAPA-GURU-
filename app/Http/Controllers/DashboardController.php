@@ -69,4 +69,26 @@ class DashboardController extends Controller
 
         return view('about.developer', compact('developers'));
     }
+    
+    public function about()
+{
+    $developers = [
+        [
+            'nama' => 'Pengembang Pertama',
+            'role' => 'Ide & Aplikasi Awal',
+            'deskripsi' => 'Perancang konsep awal sistem Sapa Guru yang menjadi fondasi utama aplikasi.',
+            'foto' => 'storage/foto/dev1.jpg',
+            'color' => 'indigo'
+        ],
+        [
+            'nama' => 'Pengembang Kedua',
+            'role' => 'Pengembang Versi Terbaru',
+            'deskripsi' => 'Mengembangkan ulang sistem dengan fitur modern, performa tinggi, dan UI/UX yang lebih baik.',
+            'foto' => 'storage/foto/dev2.jpg',
+            'color' => 'emerald'
+        ]
+    ];
+
+    return view('about', compact('developers'));
+}
 }
