@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Siswa;
 use App\Models\Kelas;
 use Illuminate\Http\Request;
+use App\Imports\SiswaImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SiswaController extends Controller
 {
@@ -100,13 +102,13 @@ class SiswaController extends Controller
                 continue;
             }
 
-            $kelas = \App\Models\Kelas::where('nama_kelas', $kelas_raw)->first();
+            $kelas = Kelas::where('nama_kelas', $kelas_raw)->first();
 
             if (!$kelas) {
                 continue;
             }
 
-            \App\Models\Siswa::updateOrCreate(
+            Siswa::updateOrCreate(
                 [
                     'no_absen' => $no_absen,
                     'kelas_id' => $kelas->id
@@ -126,5 +128,21 @@ class SiswaController extends Controller
             'success' => "$success data berhasil diimport",
             'failed' => $failed
         ]);
+    }
+
+    public function importExcel(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls'
+        ]);
+
+        Excel::import(
+            new SiswaImport,
+            $request->file('file')
+        );
+
+        return redirect()
+            ->route('siswa.index')
+            ->with('success', 'Data siswa berhasil diimport');
     }
 }

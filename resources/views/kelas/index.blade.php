@@ -13,6 +13,14 @@
         </div>
     </x-slot>
 
+    @if(auth()->user()->role == 'admin')
+    <a href="{{ route('kelas.walikelas') }}"
+    class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold px-5 py-2.5 rounded-xl">
+        <i class="fas fa-school"></i>
+        Atur Wali Kelas
+    </a>
+    @endif
+
     <div class="max-w-7xl mx-auto py-4">
         <div class="mb-6">
             <p class="text-sm text-slate-400">Silahkan pilih salah satu jurusan di bawah ini untuk melihat daftar kelas dan manajemen data yang terkait.</p>

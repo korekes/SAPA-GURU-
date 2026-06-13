@@ -77,6 +77,24 @@
                                    class="w-full pl-10 pr-4 py-2.5 bg-slate-900 border border-slate-800 text-slate-200 rounded-xl text-sm focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 transition-all">
                         </div>
                     </div>
+
+                    <div class="md:col-span-2">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-[0.1em] mb-2">Mata Pelajaran Diampu</label>
+                        <div class="relative group">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-600 group-focus-within:text-orange-400 transition-colors">
+                                <i class="fas fa-envelope text-xs"></i>
+                            </span>
+                            <input 
+                                type="email"
+                                name="email"
+                                value="{{ old('email', $guru->user->email) }}"
+                                required
+                                class="w-full pl-10 pr-4 py-2.5 bg-slate-900 border border-slate-800 text-slate-200 rounded-xl text-sm focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 transition-all"
+                            >
+                        </div>
+                    </div>
+
+                    
                 </div>
 
                 <div class="flex items-center justify-between pt-6 border-t border-slate-800/50 mt-4">

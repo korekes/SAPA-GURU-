@@ -29,28 +29,34 @@ class ProfileController extends Controller
     {
         $user = $request->user();
 
-        // update data
+        $request->validate([
+            'name'  => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'nip'   => 'nullable|string|max:50',
+            'foto'  => 'nullable|image|mimes:jpg,jpeg,png,jfif|max:2048',
+        ]);
+
         $user->name = $request->name;
+        $user->email = $request->email;
+
         if ($request->filled('nip')) {
             $user->nip = $request->nip;
         }
 
-        // upload foto
+        // Upload foto jika ada file
         if ($request->hasFile('foto')) {
 
-            // hapus foto lama (opsional)
-            if ($user->foto) {
+            // Hapus foto lama
+            if ($user->foto && Storage::disk('public')->exists($user->foto)) {
                 Storage::disk('public')->delete($user->foto);
             }
 
-            // simpan foto baru
-            $path = $request->file('foto')->store('foto-profile', 'public');
+            $path = $request->file('foto')
+                            ->store('foto-profile', 'public');
 
-            // simpan ke DB
             $user->foto = $path;
         }
 
-        $request->file('foto')->store('foto-profile', 'public');
         $user->save();
 
         return back()->with('success', 'Profile berhasil diupdate');

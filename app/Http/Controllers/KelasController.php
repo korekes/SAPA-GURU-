@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kelas;
 use App\Models\User;
+use App\Models\Guru;
 use Illuminate\Http\Request;
 
 class KelasController extends Controller
@@ -98,5 +99,33 @@ class KelasController extends Controller
         }
 
         return $kode;
+    }
+
+    public function editWalikelas()
+    {
+        $kelas = Kelas::orderBy('nama_kelas')->get();
+        $guru = Guru::with('user')->get();
+
+        return view('kelas.walikelas', compact('kelas', 'guru'));
+    }
+
+    public function updateWalikelas(Request $request)
+    {
+        $request->validate([
+            'kelas_id' => 'required|exists:kelas,id',
+            'guru_id' => 'required|exists:gurus,id',
+        ]);
+
+        $guru = Guru::with('user')->findOrFail($request->guru_id);
+
+        $kelas = Kelas::findOrFail($request->kelas_id);
+
+        $kelas->wali_kelas = $guru->user->name;
+        $kelas->save();
+
+        return back()->with(
+            'success',
+            'Wali kelas '.$kelas->nama_kelas.' berhasil diperbarui'
+        );
     }
 }

@@ -10,7 +10,9 @@ use App\Http\Controllers\{
     DashboardController,
     PerwalianController,
     JurnalController,
-    GuruController
+    GuruController,
+    MapelController,
+    GuruMengajarController
 };
 
 /*
@@ -62,8 +64,28 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::post('/siswa/import-csv', [SiswaController::class, 'importCsv'])
         ->name('siswa.importCsv');
+    Route::post('/siswa/import-excel', [SiswaController::class, 'importExcel'])
+        ->name('siswa.importExcel');
 
+    Route::get('/guru/import', [GuruController::class, 'import'])
+        ->name('guru.import');
+
+    Route::post('/guru/import', [GuruController::class, 'importProcess'])
+        ->name('guru.import.process');
+
+    Route::get('/kelas/walikelas', [KelasController::class, 'editWalikelas'])
+        ->name('kelas.walikelas');
+
+    Route::post('/kelas/walikelas', [KelasController::class, 'updateWalikelas'])
+        ->name('kelas.walikelas.update');
+
+    Route::resource('mapel', MapelController::class);
+
+    Route::post('/mapel/import',[MapelController::class,'import'])
+        ->name('mapel.import');
 });
+
+
 
 /*
 |--------------------------------------------------------------------------

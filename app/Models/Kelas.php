@@ -34,4 +34,9 @@ class Kelas extends Model
     {
         return $this->hasMany(Jurnal::class);
     }
+
+    public function mengajar()
+    {
+        return $this->hasMany(GuruMengajar::class);
+    }
 }

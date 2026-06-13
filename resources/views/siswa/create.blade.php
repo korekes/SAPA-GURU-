@@ -101,26 +101,80 @@
             <div class="bg-[#111827] border border-slate-800/80 rounded-3xl shadow-xl overflow-hidden mb-12">
                 <div class="p-6 border-b border-slate-800/50 bg-slate-900/30">
                     <h3 class="text-sm font-bold text-white flex items-center gap-2">
-                        <i class="fas fa-file-csv text-emerald-500"></i> Import Batch (CSV)
+                        <i class="fas fa-file-excel text-emerald-500"></i>
+                        Import Data Siswa (Excel)
                     </h3>
                 </div>
-                
-                <form action="{{ route('siswa.importCsv') }}" method="POST" enctype="multipart/form-data" class="p-6">
+
+                <form action="{{ route('siswa.importExcel') }}" method="POST" enctype="multipart/form-data" class="p-6">
                     @csrf
+
                     <div class="flex flex-col sm:flex-row items-center gap-4">
-                        <div class="relative flex-1 w-full">
-                            <input type="file" name="file" id="file-upload" class="hidden">
-                            <label for="file-upload" class="flex items-center justify-center w-full px-4 py-2.5 bg-slate-900 border border-dashed border-slate-700 text-slate-400 rounded-xl text-xs cursor-pointer hover:border-emerald-500/50 transition">
-                                <i class="fas fa-upload mr-2"></i> Pilih File CSV
-                            </label>
+                            <div class="relative flex-1 w-full">
+                                <div x-data="{ fileName: '' }">
+                                    <input type="file"
+                                        name="file"
+                                        id="file-upload"
+                                        accept=".xlsx,.xls"
+                                        class="hidden"
+                                        @change="fileName = $event.target.files[0]?.name">
+
+                                    <label for="file-upload"
+                                        class="flex items-center justify-center w-full px-4 py-2.5 bg-slate-900 border border-dashed border-slate-700 text-slate-400 rounded-xl text-xs cursor-pointer hover:border-emerald-500/50 transition">
+                                        <i class="fas fa-file-excel mr-2"></i>
+                                        <span class="text-slate-300 text-xs font-semibold"
+                                            x-text="fileName ? fileName : 'Pilih File Excel (.xlsx)'">
+                                        </span>
+                                        
+                                    </label>
+                                </div>
+                                
+                            </div>
+
+                            <button type="submit"
+                                    class="inline-flex items-center gap-2 px-5 py-3 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl transition shadow-lg shadow-emerald-900/20">
+                                <i class="fas fa-upload"></i>
+                                Import Siswa
+                            </button>
                         </div>
-                        <button class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-black uppercase tracking-tighter px-6 py-2.5 rounded-xl transition shadow-lg shadow-emerald-900/20">
-                            Proses Import
-                        </button>
+
+                    <div class="mt-5 p-4 mb-3 bg-slate-900 rounded-xl border border-slate-800">
+                        <p class="text-xs font-bold text-amber-400 mb-2">
+                            Format Excel yang digunakan:
+                        </p>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-xs text-slate-300">
+                                <thead>
+                                    <tr class="border-b border-slate-700">
+                                        <th class="text-left py-2">name</th>
+                                        <th class="text-left py-2">nis</th>
+                                        <th class="text-left py-2">no_absen</th>
+                                        <th class="text-left py-2">jenis_kelamin</th>
+                                        <th class="text-left py-2">kelas</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Budi Santoso</td>
+                                        <td>1234</td>
+                                        <td>1</td>
+                                        <td>L</td>
+                                        <td>XI TJKT 2</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <p class="mt-3 text-[10px] text-slate-500 italic text-center sm:text-left">
-                        * Format kolom: nama, nis, no_absen, jenis_kelamin, kelas_id
-                    </p>
+                    
+                    <div>
+                        <a href="{{ asset('template/template-siswa.xlsx') }}"
+                        class="inline-flex items-center gap-2 px-4 py-3 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold rounded-xl transition">
+                            <i class="fas fa-download"></i>
+                            Download Template
+                        </a>
+                    </div>
+                    
                 </form>
             </div>
 

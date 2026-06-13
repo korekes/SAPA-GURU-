@@ -24,8 +24,9 @@
             <div class="relative flex flex-col md:flex-row items-center md:items-end gap-8">
                 <div class="relative group">
                     <div class="absolute -inset-1 bg-gradient-to-tr from-indigo-500 to-purple-500 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-                    @if($guru->foto)
-                        <img src="{{ asset('storage/' . $guru->foto) }}"
+                    
+                    @if($guru->user->foto)
+                        <img src="{{ asset('storage/' . $guru->user->foto) }}"
                              class="relative w-32 h-32 rounded-full object-cover border-4 border-slate-900 shadow-xl">
                     @else
                         <div class="relative w-32 h-32 rounded-full bg-slate-800 border-4 border-slate-900 flex items-center justify-center text-4xl text-indigo-400 font-black shadow-xl">
@@ -36,7 +37,7 @@
                 </div>
 
                 <div class="flex-1 text-center md:text-left">
-                    <div class="flex flex-wrap justify-center md:justify-start items-center gap-3 mb-2">
+                    <div class="justify-center md:justify-start items-center gap-3 mb-2">
                         <h1 class="text-3xl font-black text-white tracking-tight">
                             {{ $guru->user->name }}
                         </h1>

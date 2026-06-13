@@ -75,6 +75,13 @@
                         <i class="fa-solid fa-person-chalkboard mr-3 text-base {{ request()->routeIs('guru.*') ? 'text-indigo-400' : 'text-slate-500' }}"></i>
                         Guru
                     </a>
+
+                    <a href="{{ route('mapel.index') }}"
+                    class="flex items-center w-full px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 
+                    {{ request()->routeIs('mapel.*') ? 'bg-gradient-to-r from-indigo-600/20 to-indigo-600/5 text-indigo-400 border border-indigo-500/30' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200 border border-transparent' }}">
+                        <i class="fa-solid fa-book-open mr-3 text-base {{ request()->routeIs('mapel.*') ? 'text-indigo-400' : 'text-slate-500' }}"></i>
+                        Mata Pelajaran
+                    </a>
                 @endif
 
                 @if(auth()->user()->role == 'guru')

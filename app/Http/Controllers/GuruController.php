@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Guru;
+use App\Models\Kelas;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Imports\GuruImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class GuruController extends Controller
 {
@@ -14,9 +17,12 @@ class GuruController extends Controller
         $query = Guru::with('user');
 
         if ($request->search) {
-            $query->whereHas('user', function ($q) use ($request) {
-                $q->where('name', 'like', "%{$request->search}%");
-            })->orWhere('nip', 'like', "%{$request->search}%");
+            $search = $request->search;
+
+            $query->whereHas('user', function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                ->orWhere('nip', 'like', "%{$search}%");
+            });
         }
 
         $guru = $query->latest()->get();
@@ -77,7 +83,7 @@ class GuruController extends Controller
 
         // update user
         $guru->user->update([
-            'name' => $request->name,
+            'name' => $request->nama,
             'email' => $request->email,
             'nip' => $request->nip, // pindah ke sini
         ]);
@@ -85,6 +91,7 @@ class GuruController extends Controller
         // update guru
         $guru->update([
             'mapel' => $request->mapel,
+            'jenis_kelamin' => $request->jenis_kelamin,
         ]);
 
         return redirect()->route('guru.index')->with('success', 'Data berhasil diupdate');
@@ -99,4 +106,26 @@ class GuruController extends Controller
 
         return back()->with('success', 'Data berhasil dihapus');
     }
+
+    public function import()
+    {
+        return view('guru.import');
+    }
+
+    public function importProcess(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls'
+        ]);
+
+        Excel::import(
+            new GuruImport,
+            $request->file('file')
+        );
+
+        return redirect()
+            ->route('guru.index')
+            ->with('success', 'Data guru berhasil diimport');
+    }
+
 }
