@@ -28,7 +28,7 @@
     <nav :class="open ? 'translate-x-0' : '-translate-x-full'" 
          class="fixed left-0 top-0 h-screen w-72 bg-[#111827] border-r border-slate-800/80 z-[55] flex flex-col justify-between transition-transform duration-300 ease-in-out lg:translate-x-0">
         
-        <div class="overflow-y-auto custom-scrollbar">
+        <div class="overflow-y-auto flex-1 scrollbar-thin scrollbar-thumb-slate-700/50 scrollbar-track-transparent hover:scrollbar-thumb-indigo-500/50 custom-scrollbar">
             <div class="hidden lg:block p-6 border-b border-slate-800/80">
                 <div class="flex items-center gap-3">
                     <div class="p-2 bg-indigo-600/10 rounded-xl border border-indigo-500/20">
@@ -46,7 +46,7 @@
 
             <div class="py-6 px-4 space-y-1.5">
                 <a href="{{ route('dashboard') }}" 
-                   class="flex items-center w-full px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 
+                   class="flex items-center w-full px-4 py-3 text-xs font-medium rounded-xl transition-all duration-200 
                    {{ request()->routeIs('dashboard') ? 'bg-gradient-to-r from-indigo-600/20 to-indigo-600/5 text-indigo-400 border border-indigo-500/30' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200 border border-transparent' }}">
                     <i class="fa-solid fa-house-chimney mr-3 text-base {{ request()->routeIs('dashboard') ? 'text-indigo-400' : 'text-slate-500' }}"></i>
                     {{ __('Dashboard') }}
@@ -56,31 +56,38 @@
                     <div class="pt-4 pb-2 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Menu Admin</div>
                     
                     <a href="/siswa" 
-                       class="flex items-center w-full px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 
+                       class="flex items-center w-full px-4 py-3 text-xs font-medium rounded-xl transition-all duration-200 
                        {{ request()->routeIs('siswa.*') ? 'bg-gradient-to-r from-indigo-600/20 to-indigo-600/5 text-indigo-400 border border-indigo-500/30' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200 border border-transparent' }}">
                         <i class="fa-solid fa-users mr-3 text-base {{ request()->routeIs('siswa.*') ? 'text-indigo-400' : 'text-slate-500' }}"></i>
                         Siswa
                     </a>
 
                     <a href="/kelas" 
-                       class="flex items-center w-full px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 
+                       class="flex items-center w-full px-4 py-3 text-xs font-medium rounded-xl transition-all duration-200 
                        {{ request()->routeIs('kelas.*') ? 'bg-gradient-to-r from-indigo-600/20 to-indigo-600/5 text-indigo-400 border border-indigo-500/30' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200 border border-transparent' }}">
                         <i class="fa-solid fa-chalkboard-user mr-3 text-base {{ request()->routeIs('kelas.*') ? 'text-indigo-400' : 'text-slate-500' }}"></i>
                         Kelas
                     </a>
 
                     <a href="/guru" 
-                       class="flex items-center w-full px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 
+                       class="flex items-center w-full px-4 py-3 text-xs font-medium rounded-xl transition-all duration-200 
                        {{ request()->routeIs('guru.*') ? 'bg-gradient-to-r from-indigo-600/20 to-indigo-600/5 text-indigo-400 border border-indigo-500/30' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200 border border-transparent' }}">
                         <i class="fa-solid fa-person-chalkboard mr-3 text-base {{ request()->routeIs('guru.*') ? 'text-indigo-400' : 'text-slate-500' }}"></i>
                         Guru
                     </a>
 
                     <a href="{{ route('mapel.index') }}"
-                    class="flex items-center w-full px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 
+                    class="flex items-center w-full px-4 py-3 text-xs font-medium rounded-xl transition-all duration-200 
                     {{ request()->routeIs('mapel.*') ? 'bg-gradient-to-r from-indigo-600/20 to-indigo-600/5 text-indigo-400 border border-indigo-500/30' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200 border border-transparent' }}">
                         <i class="fa-solid fa-book-open mr-3 text-base {{ request()->routeIs('mapel.*') ? 'text-indigo-400' : 'text-slate-500' }}"></i>
                         Mata Pelajaran
+                    </a>
+
+                    <a href="{{ route('jadwal.index') }}"
+                    class="flex items-center w-full px-4 py-3 text-xs font-medium rounded-xl transition-all duration-200
+                    {{ request()->routeIs('jadwal.*') ? 'bg-gradient-to-r from-indigo-600/20 to-indigo-600/5 text-indigo-400 border border-indigo-500/30' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200 border border-transparent' }}">
+                        <i class="fa-solid fa-calendar-days mr-3 text-base"></i>
+                        Jadwal Pelajaran
                     </a>
                 @endif
 
@@ -88,23 +95,23 @@
                     <div class="pt-4 pb-2 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Menu Guru</div>
                     
                     <a href="/kelas" 
-                       class="flex items-center w-full px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 
+                       class="flex items-center w-full px-4 py-3 text-xs font-medium rounded-xl transition-all duration-200 
                        {{ request()->routeIs('kelas.*') ? 'bg-gradient-to-r from-indigo-600/20 to-indigo-600/5 text-indigo-400 border border-indigo-500/30' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200 border border-transparent' }}">
                         <i class="fa-solid fa-chalkboard-user mr-3 text-base {{ request()->routeIs('kelas.*') ? 'text-indigo-400' : 'text-slate-500' }}"></i>
                         Kelas
                     </a>
 
                     <a href="/perwalian" 
-                       class="flex items-center w-full px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 
+                       class="flex items-center w-full px-4 py-3 text-xs font-medium rounded-xl transition-all duration-200 
                        {{ request()->routeIs('perwalian.*') ? 'bg-gradient-to-r from-indigo-600/20 to-indigo-600/5 text-indigo-400 border border-indigo-500/30' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200 border border-transparent' }}">
-                        <i class="fa-solid fa-address-card mr-3 text-base {{ request()->routeIs('perwalian.*') ? 'text-indigo-400' : 'text-slate-500' }}"></i>
+                        <i class="fa-solid fa-address-card mr-3 text-base {{ request()->routeIs('perwalian.*') ? 'text-indigo-400' : 'text-slate-50₀' }}"></i>
                         Perwalian
                     </a>
 
                     <div class="pt-4 pb-2 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Tentang</div>
 
                     <a href="/about/developer" 
-                       class="flex items-center w-full px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 
+                       class="flex items-center w-full px-4 py-3 text-xs font-medium rounded-xl transition-all duration-200 
                        {{ request()->routeIs('about') ? 'bg-gradient-to-r from-indigo-600/20 to-indigo-600/5 text-indigo-400 border border-indigo-500/30' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200 border border-transparent' }}">
                         <i class="fa-solid fa-people-group mr-3 text-base {{ request()->routeIs('about') ? 'text-indigo-400' : 'text-slate-500' }}"></i>
                         Tentang
@@ -113,13 +120,13 @@
             </div>
         </div>
 
-        <div class="p-4 border-t border-slate-800/80 bg-[#0d131f]">
+        <div class="p-3 border-t border-slate-800/80 bg-[#0d131f]">
             <div class="flex items-center gap-3 px-3 py-2 mb-4 bg-slate-800/40 rounded-xl border border-slate-800">
-                <div class="w-9 h-9 flex-shrink-0 rounded-lg bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center font-bold text-white uppercase text-sm shadow-sm shadow-indigo-500/20">
+                <div class="w-9 h-9 flex-shrink-0 rounded-lg bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center font-bold text-white uppercase text-xs shadow-sm shadow-indigo-500/20">
                     {{ substr(Auth::user()->name, 0, 2) }}
                 </div>
                 <div class="flex-1 overflow-hidden">
-                    <div class="text-sm font-semibold text-slate-200 truncate">{{ Auth::user()->name }}</div>
+                    <div class="text-xs font-semibold text-slate-200 truncate">{{ Auth::user()->name }}</div>
                     <div class="text-[10px] text-slate-400 truncate flex items-center gap-1 uppercase tracking-tight">
                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)]"></span> NIP: {{ Auth::user()->nip }}
                     </div>

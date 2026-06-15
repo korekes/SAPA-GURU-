@@ -12,7 +12,8 @@ use App\Http\Controllers\{
     JurnalController,
     GuruController,
     MapelController,
-    GuruMengajarController
+    GuruMengajarController,
+    JadwalController
 };
 
 /*
@@ -83,6 +84,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::post('/mapel/import',[MapelController::class,'import'])
         ->name('mapel.import');
+
+    Route::resource('jadwal',JadwalController::class);
+    Route::post('/jadwal/import',[JadwalController::class,'import'])   
+        ->name('jadwal.import');
+    Route::post('/jadwal/drop',[JadwalController::class,'drop'])
+        ->name('jadwal.drop');
 });
 
 

@@ -11,33 +11,92 @@ use App\Models\Activity;
 use App\Models\Absensi;
 use App\Models\AbsensiDetail;
 use App\Models\Nilai;
+use App\Models\GuruMengajar;
+use App\Models\Jurnal;
+use App\Models\Mapel;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
    public function index()
     {
+        if (auth()->user()->role == 'guru') {
+
+            $guru = Guru::where('user_id', auth()->id())
+                ->first();
+
+            $mengajar = GuruMengajar::with([
+                'kelas',
+                'mapel'
+            ])
+            ->where('guru_id', $guru->id)
+            ->get();
+
+            $totalKelas = $mengajar
+                ->pluck('kelas_id')
+                ->unique()
+                ->count();
+
+            $totalMapel = $mengajar
+                ->pluck('mapel_id')
+                ->unique()
+                ->count();
+
+            $kelasIds = $mengajar
+                ->pluck('kelas_id')
+                ->unique();
+
+            $totalSiswa = Siswa::whereIn(
+                'kelas_id',
+                $kelasIds
+            )->count();
+
+            $materiTerakhir = Jurnal::with('kelas')
+                ->where('guru_id', $guru->id)
+                ->latest()
+                ->first();
+
+            $totalJurnal = Jurnal::where(
+                'guru_id',
+                $guru->id
+            )->count();
+
+            return view('dashboard', compact(
+                'mengajar',
+                'totalKelas',
+                'totalMapel',
+                'totalSiswa',
+                'materiTerakhir',
+                'totalJurnal'
+            ));
+        }
+
         $total_siswa = Siswa::count();
 
-        // hadir hari ini
         $hadir = AbsensiDetail::where('status', 'hadir')
             ->whereHas('absensi', function ($q) {
                 $q->whereDate('tanggal', now());
             })
             ->count();
 
-        $total_absensi = Absensi::whereDate('tanggal', now())->count();
+        $total_absensi = Absensi::whereDate(
+            'tanggal',
+            now()
+        )->count();
 
-        $persen_hadir = $total_absensi > 0 
-            ? round(($hadir / $total_siswa) * 100 )
+        $persen_hadir = $total_absensi > 0
+            ? round(($hadir / $total_siswa) * 100)
             : 0;
 
         $total_nilai = Nilai::count();
 
-        return view('dashboard', compact(
-            'total_siswa',
-            'persen_hadir',
-            'total_nilai'
-        ));
+        return view('dashboard', [
+            'total_siswa'      => Siswa::count(),
+            'total_guru'       => Guru::count(),
+            'total_kelas'      => Kelas::count(),
+            'total_mapel'      => Mapel::count(),
+            'total_mengajar'   => GuruMengajar::count(),
+        ]);
     }
 
     public function latestActivity()

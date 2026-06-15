@@ -1,3 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Kustomisasi Scrollbar untuk sidebar tema gelap */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px; /* Membuat scrollbar lebih tipis dan elegan */
+}
+
+/* Area track (latar belakang scrollbar) */
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent; /* Dibuat transparan agar menyatu dengan navbar */
+}
+
+/* Batang scrollbar (thumb) */
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(71, 85, 105, 0.3); /* Warna slate gelap semi-transparan */
+    border-radius: 100px; /* Membuat ujungnya membulat sempurna */
+    border: 1px solid transparent; /* Jarak halus */
+}
+
+/* Efek saat kursor mouse diarahkan ke scrollbar */
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(99, 102, 241, 0.5); /* Berubah menjadi warna indigo redup saat di-hover */
+}
+
+/* Untuk Firefox */
+.custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(71, 85, 105, 0.3) transparent;
+}
