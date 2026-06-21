@@ -36,7 +36,7 @@
                         <div class="absolute inset-0 rounded-full {{ $theme['bg'] }} animate-pulse scale-110"></div>
                         <div class="relative w-40 h-40 rounded-full p-1.5 border-2 {{ $theme['border'] }} overflow-hidden bg-slate-900">
                             <img src="{{ asset($dev['foto']) }}" 
-                                 class="w-full h-full rounded-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-110 group-hover:scale-100"
+                                 class="w-full h-full rounded-full object-cover group-hover:grayscale-0 transition-all duration-700 scale-110 group-hover:scale-100"
                                  alt="{{ $dev['nama'] }}">
                         </div>
                         

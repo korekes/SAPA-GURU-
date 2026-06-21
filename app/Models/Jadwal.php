@@ -13,16 +13,16 @@ class Jadwal extends Model
 
     protected $fillable = [
         'guru_mengajar_id',
+        'kelas_id', // diisi otomatis dari guru_mengajar->kelas_id saat create
         'hari',
         'jam_mulai',
         'jam_selesai',
+        'minggu', // 'produktif' (Blok A) atau 'normada' (Blok B)
     ];
 
-    /*
-    |--------------------------------------------------------------------------
-    | Urutan hari untuk sorting manual
-    |--------------------------------------------------------------------------
-    */
+    const MINGGU_PRODUKTIF = 'produktif';
+    const MINGGU_NORMADA   = 'normada';
+
     const URUTAN_HARI = [
         'Senin'  => 1,
         'Selasa' => 2,
@@ -38,27 +38,17 @@ class Jadwal extends Model
     |--------------------------------------------------------------------------
     */
 
-    /**
-     * Relasi ke GuruMengajar (pivot guru–mapel–kelas).
-     */
     public function mengajar()
     {
         return $this->belongsTo(GuruMengajar::class, 'guru_mengajar_id');
     }
 
     /**
-     * Shortcut langsung ke Kelas melalui GuruMengajar.
+     * Relasi langsung ke Kelas via kolom kelas_id di tabel jadwal.
      */
     public function kelas()
     {
-        return $this->hasOneThrough(
-            Kelas::class,
-            GuruMengajar::class,
-            'id',           // FK di guru_mengajars
-            'id',           // FK di kelas
-            'guru_mengajar_id', // FK di jadwal
-            'kelas_id'      // FK di guru_mengajars
-        );
+        return $this->belongsTo(Kelas::class, 'kelas_id');
     }
 
     /*
@@ -67,36 +57,31 @@ class Jadwal extends Model
     |--------------------------------------------------------------------------
     */
 
-    /**
-     * Nama mapel via relasi.
-     */
     public function getNamaMapelAttribute(): string
     {
         return $this->mengajar?->mapel?->nama_mapel ?? '-';
     }
 
-    /**
-     * Nama guru via relasi.
-     */
     public function getNamaGuruAttribute(): string
     {
         return $this->mengajar?->guru?->user?->name ?? '-';
     }
 
-    /**
-     * Nama kelas via relasi.
-     */
     public function getNamaKelasAttribute(): string
     {
         return $this->mengajar?->kelas?->nama_kelas ?? '-';
     }
 
-    /**
-     * Jam tampil dalam format HH:MM – HH:MM.
-     */
     public function getJamAttribute(): string
     {
         return substr($this->jam_mulai, 0, 5) . ' – ' . substr($this->jam_selesai, 0, 5);
+    }
+
+    public function getLabelMingguAttribute(): string
+    {
+        return $this->minggu === self::MINGGU_NORMADA
+            ? 'Minggu Normada (Blok B)'
+            : 'Minggu Produktif (Blok A)';
     }
 
     /*
@@ -105,9 +90,6 @@ class Jadwal extends Model
     |--------------------------------------------------------------------------
     */
 
-    /**
-     * Filter berdasarkan kelas.
-     */
     public function scopeKelas($query, string $namaKelas)
     {
         return $query->whereHas(
@@ -116,17 +98,29 @@ class Jadwal extends Model
         );
     }
 
-    /**
-     * Filter berdasarkan hari.
-     */
     public function scopeHari($query, string $hari)
     {
         return $query->where('hari', $hari);
     }
 
     /**
-     * Urutkan berdasarkan urutan hari dan jam mulai.
+     * Filter berdasarkan blok minggu (produktif / normada).
      */
+    public function scopeMinggu($query, string $minggu)
+    {
+        return $query->where('minggu', $minggu);
+    }
+
+    public function scopeProduktif($query)
+    {
+        return $query->where('minggu', self::MINGGU_PRODUKTIF);
+    }
+
+    public function scopeNormada($query)
+    {
+        return $query->where('minggu', self::MINGGU_NORMADA);
+    }
+
     public function scopeTerurut($query)
     {
         return $query

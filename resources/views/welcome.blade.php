@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selamat Datang - Sapa Guru</title>
+    <title>Sapa Guru</title>
     
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('storage/logo/logo.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('storage/logo/logo.png') }}">
@@ -31,7 +31,7 @@
 
             <div class="mt-10 flex flex-col md:flex-row justify-center gap-4">
                 <a href="{{ route('login') }}" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 rounded-xl font-bold text-sm shadow-lg shadow-indigo-600/20 transition">
-                    Mulai Sekarang
+                    Masuk Sekarang
                 </a>
             </div>
         </div>
